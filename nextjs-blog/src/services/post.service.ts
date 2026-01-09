@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 
 export async function getAllPosts() {
-  return prisma.post.findMany({
+  return prisma.blog.findMany({
     include: {
       user: {
         select: { name: true },

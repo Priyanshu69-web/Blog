@@ -18,7 +18,13 @@ interface Post {
 }
 
 export default async function PostsPage() {
-  const posts: Post[] = await getAllPosts();
+  let posts: Post[] = [];
+  try {
+    posts = await getAllPosts();
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+  }
+  
   const session = await getServerSession(authOptions);
 
   return (
