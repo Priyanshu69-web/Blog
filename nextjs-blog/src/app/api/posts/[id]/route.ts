@@ -42,8 +42,8 @@ export async function PUT(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session?.user?.isAdmin) {
+      return NextResponse.json({ error: "Unauthorized - Admin only" }, { status: 401 });
     }
 
     const postId = parseInt(params.id);
@@ -56,17 +56,13 @@ export async function PUT(
       );
     }
 
-    // Check if post exists and belongs to user
+    // Check if post exists
     const existingPost = await prisma.blog.findUnique({
       where: { id: postId },
     });
 
     if (!existingPost) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
-    }
-
-    if (existingPost.userId !== parseInt(session.user.id)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     const updatedPost = await prisma.blog.update({
@@ -92,23 +88,19 @@ export async function DELETE(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session?.user?.isAdmin) {
+      return NextResponse.json({ error: "Unauthorized - Admin only" }, { status: 401 });
     }
 
     const postId = parseInt(params.id);
 
-    // Check if post exists and belongs to user
+    // Check if post exists
     const existingPost = await prisma.blog.findUnique({
       where: { id: postId },
     });
 
     if (!existingPost) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
-    }
-
-    if (existingPost.userId !== parseInt(session.user.id)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     await prisma.blog.delete({
