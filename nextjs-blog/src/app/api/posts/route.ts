@@ -3,18 +3,65 @@ import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db";
 import { authOptions } from "@/lib/auth";
 
-// GET /api/posts - Get all posts
-export async function GET() {
+// GET /api/posts - Get all posts with search, pagination, and category filter
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const search = searchParams.get("search") || "";
+    const category = searchParams.get("category") || "";
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "9");
+    const skip = (page - 1) * limit;
+
+    // Build where clause
+    const where: any = {};
+    
+    if (search) {
+      // MySQL doesn't support mode: "insensitive", but case-insensitive search works by default in MySQL
+      const searchLower = search.toLowerCase();
+      where.OR = [
+        { title: { contains: search } },
+        { content: { contains: search } },
+        { category: { contains: search } },
+      ];
+    }
+
+    if (category) {
+      where.category = category;
+    }
+
+    // Get total count for pagination
+    const total = await prisma.blog.count({ where });
+
+    // Get posts with pagination
     const posts = await prisma.blog.findMany({
+      where,
       include: {
         user: { select: { name: true } },
         comments: true,
       },
       orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
     });
 
-    return NextResponse.json(posts);
+    // Get all unique categories for filter
+    const categories = await prisma.blog.findMany({
+      select: { category: true },
+      distinct: ["category"],
+      orderBy: { category: "asc" },
+    });
+
+    return NextResponse.json({
+      posts,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+      categories: categories.map((c) => c.category),
+    });
   } catch (error) {
     console.error("Error fetching posts:", error);
     return NextResponse.json(

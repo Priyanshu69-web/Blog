@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { TinyMCEEditor } from "@/components/TinyMCEEditor";
 
 const categories = [
   "JavaScript",
@@ -60,13 +61,20 @@ export default function EditPostPage() {
 
   const handleChange = (
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement | HTMLSelectElement
     >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleContentChange = (content: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      content,
     }));
   };
 
@@ -182,16 +190,13 @@ export default function EditPostPage() {
                   <label htmlFor="content" className="block text-sm font-medium text-slate-200 mb-2">
                     Content
                   </label>
-                  <textarea
-                    id="content"
-                    name="content"
-                    required
-                    value={formData.content}
-                    onChange={handleChange}
-                    rows={10}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-500"
-                    placeholder="Write your post content here..."
-                  />
+                  <div className="bg-slate-800 rounded-md">
+                    <TinyMCEEditor
+                      value={formData.content}
+                      onChange={handleContentChange}
+                      height={500}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex gap-3">

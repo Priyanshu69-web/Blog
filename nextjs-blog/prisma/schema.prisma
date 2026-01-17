@@ -38,7 +38,8 @@ model Comment {
   id        Int      @id @default(autoincrement())
   blogId    Int
   blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  name      String
+  name      String?
+  email     String?
   comment   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
