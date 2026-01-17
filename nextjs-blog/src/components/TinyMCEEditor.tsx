@@ -71,25 +71,29 @@ export function TinyMCEEditor({ value, onChange, height = 500 }: TinyMCEEditorPr
         }}
         init={{
           base_url: "/tinymce",
-          license_key: "gpl",
           suffix: ".min",
-          height: height,
+          height,
           menubar: true,
+          license_key: "gpl",
+        
           plugins: [
             "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
             "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
-            "insertdatetime", "media", "table", "code", "help", "wordcount"
+            "insertdatetime", "media", "table", "help", "wordcount"
           ],
-          toolbar: "undo redo | blocks | " +
-            "bold italic forecolor | alignleft aligncenter " +
+          toolbar:
+            "undo redo | blocks | bold italic forecolor | alignleft aligncenter " +
             "alignright alignjustify | bullist numlist outdent indent | " +
             "removeformat | help | code | link image media | table",
-          content_style: isDark 
+        
+          content_style: isDark
             ? "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color: #e2e8f0; background-color: #1e293b; }"
             : "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color: #1e293b; background-color: #ffffff; }",
+        
           skin: isDark ? "oxide-dark" : "oxide",
           content_css: isDark ? "dark" : "default",
-        }}
+        } as any}   // ✅ this line fixes TS error
+        
       />
     </div>
   );
