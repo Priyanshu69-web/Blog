@@ -84,7 +84,7 @@ export default function CreatePostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="w-full max-w-6xl mx-auto px-4 max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -92,30 +92,30 @@ export default function CreatePostPage() {
           transition={{ duration: 0.4 }}
         >
           {/* Back Button */}
-          <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-6">
+          <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
           </Link>
 
           {/* Card */}
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-white text-2xl">Create New Post</CardTitle>
+              <CardTitle className="text-card-foreground text-2xl">Create New Post</CardTitle>
             </CardHeader>
             <CardContent>
               {error && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="mb-4 p-4 bg-red-900/20 border border-red-700 rounded-md"
+                  className="mb-4 p-4 bg-destructive/20 border border-destructive rounded-md"
                 >
-                  <p className="text-red-400 text-sm">{error}</p>
+                  <p className="text-destructive text-sm">{error}</p>
                 </motion.div>
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium text-slate-200 mb-2">
+                  <label htmlFor="title" className="block text-sm font-medium text-foreground mb-2">
                     Post Title
                   </label>
                   <Input
@@ -125,13 +125,13 @@ export default function CreatePostPage() {
                     required
                     value={formData.title}
                     onChange={handleChange}
-                    className="bg-slate-800 border-slate-700 text-white placeholder-slate-500"
+                    className="bg-background border-border text-foreground placeholder-muted-foreground"
                     placeholder="Enter post title"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-slate-200 mb-2">
+                  <label htmlFor="category" className="block text-sm font-medium text-foreground mb-2">
                     Category
                   </label>
                   <select
@@ -139,7 +139,7 @@ export default function CreatePostPage() {
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-background border border-border text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     {categories.map((cat) => (
                       <option key={cat} value={cat}>
@@ -150,10 +150,10 @@ export default function CreatePostPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="content" className="block text-sm font-medium text-slate-200 mb-2">
+                  <label htmlFor="content" className="block text-sm font-medium text-foreground mb-2">
                     Content
                   </label>
-                  <div className="bg-slate-800 rounded-md">
+                  <div className="bg-background rounded-md border border-border">
                     <TinyMCEEditor
                       value={formData.content}
                       onChange={handleContentChange}
@@ -166,7 +166,7 @@ export default function CreatePostPage() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                   >
                     {isLoading ? "Creating..." : "Create Post"}
                   </Button>
@@ -174,7 +174,7 @@ export default function CreatePostPage() {
                     <Button
                       type="button"
                       variant="outline"
-                      className="w-full border-slate-600 text-slate-200 hover:bg-slate-800"
+                      className="w-full border-border text-foreground hover:bg-accent"
                     >
                       Cancel
                     </Button>

@@ -37,13 +37,27 @@ export function TinyMCEEditor({ value, onChange, height = 500 }: TinyMCEEditorPr
     };
   }, []);
 
+  useEffect(() => {
+    // Update TinyMCE theme when dark mode changes
+    if (editorRef.current && typeof window !== "undefined") {
+      const isDark = document.documentElement.classList.contains("dark");
+      const editor = editorRef.current;
+      if (editor) {
+        editor.getBody().style.color = isDark ? "#e2e8f0" : "#1e293b";
+        editor.getBody().style.backgroundColor = isDark ? "#1e293b" : "#ffffff";
+      }
+    }
+  }, [value]);
+
   if (!tinymceLoaded) {
     return (
-      <div className="flex items-center justify-center h-64 bg-slate-800 rounded-md border border-slate-700">
-        <p className="text-slate-400">Loading editor...</p>
+      <div className="flex items-center justify-center h-64 bg-background rounded-md border border-border">
+        <p className="text-muted-foreground">Loading editor...</p>
       </div>
     );
   }
+
+  const isDark = typeof window !== "undefined" && document.documentElement.classList.contains("dark");
 
   return (
     <div>
@@ -57,8 +71,8 @@ export function TinyMCEEditor({ value, onChange, height = 500 }: TinyMCEEditorPr
         }}
         init={{
           base_url: "/tinymce",
-          suffix: ".min",
           license_key: "gpl",
+          suffix: ".min",
           height: height,
           menubar: true,
           plugins: [
@@ -70,9 +84,11 @@ export function TinyMCEEditor({ value, onChange, height = 500 }: TinyMCEEditorPr
             "bold italic forecolor | alignleft aligncenter " +
             "alignright alignjustify | bullist numlist outdent indent | " +
             "removeformat | help | code | link image media | table",
-          content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color: #e2e8f0; }",
-          skin: "oxide-dark",
-          content_css: "dark",
+          content_style: isDark 
+            ? "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color: #e2e8f0; background-color: #1e293b; }"
+            : "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; color: #1e293b; background-color: #ffffff; }",
+          skin: isDark ? "oxide-dark" : "oxide",
+          content_css: isDark ? "dark" : "default",
         }}
       />
     </div>

@@ -44,21 +44,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 min-w-100 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-background min-w-100 flex items-center justify-center px-4 py-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <Card className="w-full max-w-md bg-slate-900 border-slate-800">
+        <Card className="w-lg max-w-2xl bg-card border-border">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                 MyBlogSpace
               </div>
             </div>
-            <CardTitle className="text-white">Admin Login</CardTitle>
-            <p className="text-sm text-slate-400 mt-2">
+            <CardTitle className="text-card-foreground">Admin Login</CardTitle>
+            <p className="text-sm text-muted-foreground mt-2">
               Only administrators can access the dashboard
             </p>
           </CardHeader>
@@ -67,9 +67,9 @@ export default function LoginPage() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mb-4 p-4 bg-red-900/20 border border-red-700 rounded-md"
+                className="mb-4 p-4 bg-destructive/20 border border-destructive rounded-md"
               >
-                <p className="text-red-400 text-sm">{error}</p>
+                <p className="text-destructive text-sm">{error}</p>
               </motion.div>
             )}
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-slate-200 mb-2"
+                  className="block text-sm font-medium text-foreground mb-2"
                 >
                   Email
                 </label>
@@ -86,7 +86,7 @@ export default function LoginPage() {
                   name="email"
                   type="email"
                   required
-                  className="bg-slate-800 border-slate-700 text-white placeholder-slate-500"
+                  className="bg-background border-border text-foreground placeholder-muted-foreground"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-slate-200 mb-2"
+                  className="block text-sm font-medium text-foreground mb-2"
                 >
                   Password
                 </label>
@@ -103,7 +103,7 @@ export default function LoginPage() {
                   name="password"
                   type="password"
                   required
-                  className="bg-slate-800 border-slate-700 text-white placeholder-slate-500"
+                  className="bg-background border-border text-foreground placeholder-muted-foreground"
                   placeholder="••••••••"
                 />
               </div>
@@ -111,16 +111,16 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
-                <Link href="/" className="text-blue-400 hover:text-blue-300">
+                <Link href="/" className="text-primary hover:text-primary/80 transition-colors">
                   Return to home
                 </Link>
               </p>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface Post {
   id: number;
@@ -115,14 +116,14 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-white">All Blog Posts</h1>
+          <h1 className="text-4xl font-bold text-foreground">All Blog Posts</h1>
 
           {isAdmin && (
             <Link href="/admin/dashboard">
-              <Button className="bg-blue-600 hover:bg-blue-700">Admin Dashboard</Button>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Admin Dashboard</Button>
             </Link>
           )}
         </div>
@@ -136,9 +137,9 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
               placeholder="Search posts by title, content, or category..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 bg-slate-800 border-slate-700 text-white placeholder-slate-500"
+              className="flex-1 bg-background border-border text-foreground placeholder-muted-foreground"
             />
-            <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+            <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Search
             </Button>
             {search && (
@@ -149,7 +150,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                   setSearch("");
                   updateURL({ search: "", page: 1 });
                 }}
-                className="border-slate-600 text-slate-200 hover:bg-slate-800"
+                className="border-border text-foreground hover:bg-accent"
               >
                 Clear
               </Button>
@@ -164,8 +165,8 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                 onClick={() => handleCategoryChange("")}
                 className={
                   selectedCategory === ""
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "border-slate-600 text-slate-200 hover:bg-slate-800"
+                    ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                    : "border-border text-foreground hover:bg-accent"
                 }
               >
                 All Categories
@@ -177,8 +178,8 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                   onClick={() => handleCategoryChange(category)}
                   className={
                     selectedCategory === category
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "border-slate-600 text-slate-200 hover:bg-slate-800"
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                      : "border-border text-foreground hover:bg-accent"
                   }
                 >
                   {category}
@@ -191,11 +192,11 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
         {/* Loading State */}
         {isLoading ? (
           <div className="text-center py-12">
-            <p className="text-slate-400">Loading posts...</p>
+            <p className="text-muted-foreground">Loading posts...</p>
           </div>
         ) : posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-slate-400">No blogs found. Try adjusting your search or filter.</p>
+            <p className="text-muted-foreground">No blogs found. Try adjusting your search or filter.</p>
           </div>
         ) : (
           <>
@@ -204,22 +205,20 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
               {posts.map((post) => (
                 <Card
                   key={post.id}
-                  className="h-full bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors"
+                  className="h-full bg-card border-border hover:border-primary/50 transition-colors"
                 >
                   <CardHeader>
-                    <CardTitle className="text-xl text-white line-clamp-2">{post.title}</CardTitle>
+                    <CardTitle className="text-xl text-card-foreground line-clamp-2">{post.title}</CardTitle>
 
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-sm text-slate-400">By {post.user.name}</span>
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <span className="text-sm text-muted-foreground">By {post.user.name}</span>
 
-                      <span className="inline-flex items-center rounded-md bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-300 border border-blue-700">
-                        {post.category}
-                      </span>
+                      <Badge variant="category">{post.category}</Badge>
                     </div>
                   </CardHeader>
 
                   <CardContent>
-                    <p className="text-slate-400 mb-4 line-clamp-3">
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
                       {stripHtml(post.content)}...
                     </p>
 
@@ -228,7 +227,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-slate-600 text-slate-200 hover:bg-slate-800"
+                          className="border-border text-foreground hover:bg-accent"
                         >
                           Read More
                         </Button>
@@ -246,7 +245,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                   variant="outline"
                   onClick={() => handlePageChange(page - 1)}
                   disabled={page === 1}
-                  className="border-slate-600 text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+                  className="border-border text-foreground hover:bg-accent disabled:opacity-50"
                 >
                   Previous
                 </Button>
@@ -266,8 +265,8 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                           onClick={() => handlePageChange(pageNum)}
                           className={
                             pageNum === page
-                              ? "bg-blue-600 hover:bg-blue-700"
-                              : "border-slate-600 text-slate-200 hover:bg-slate-800"
+                              ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                              : "border-border text-foreground hover:bg-accent"
                           }
                         >
                           {pageNum}
@@ -275,7 +274,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                       );
                     } else if (pageNum === page - 2 || pageNum === page + 2) {
                       return (
-                        <span key={pageNum} className="text-slate-400 px-2">
+                        <span key={pageNum} className="text-muted-foreground px-2">
                           ...
                         </span>
                       );
@@ -288,7 +287,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
                   variant="outline"
                   onClick={() => handlePageChange(page + 1)}
                   disabled={page === pagination.totalPages}
-                  className="border-slate-600 text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+                  className="border-border text-foreground hover:bg-accent disabled:opacity-50"
                 >
                   Next
                 </Button>
@@ -296,7 +295,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
             )}
 
             {/* Results Info */}
-            <div className="text-center mt-4 text-slate-400 text-sm">
+            <div className="text-center mt-4 text-muted-foreground text-sm">
               Showing {posts.length > 0 ? (page - 1) * pagination.limit + 1 : 0} to{" "}
               {Math.min(page * pagination.limit, pagination.total)} of {pagination.total} posts
             </div>
@@ -309,7 +308,7 @@ function BlogListingContent({ isAdmin }: BlogListingProps) {
 
 export function BlogListing({ isAdmin }: BlogListingProps) {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center"><p className="text-slate-400">Loading...</p></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>}>
       <BlogListingContent isAdmin={isAdmin} />
     </Suspense>
   );

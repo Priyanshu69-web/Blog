@@ -90,7 +90,7 @@ export function AdminBlogList({ initialPosts }: { initialPosts: Blog[] }) {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="w-full sm:w-auto border-slate-600 text-slate-200 hover:bg-slate-800"
+                            className="w-full sm:w-auto "
                           >
                             <Eye className="w-4 h-4 mr-2" />
                             View

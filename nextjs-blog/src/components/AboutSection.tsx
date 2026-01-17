@@ -1,17 +1,17 @@
 export function AboutSection() {
   return (
-    <section className="py-20 md:py-32 bg-linear-to-b from-slate-950 to-slate-900 text-white">
+    <section className="py-20 md:py-32 bg-background text-foreground">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
               About MyBlogSpace
             </h2>
           </div>
 
           {/* Content */}
-          <div className="space-y-6 text-lg text-slate-300">
+          <div className="space-y-6 text-lg text-muted-foreground">
             <p>
               MyBlogSpace is a developer-focused blog platform designed to help
               programmers, tech learners, and startup enthusiasts master modern
@@ -33,16 +33,16 @@ export function AboutSection() {
               in your projects.
             </p>
 
-            <p className="text-slate-400 italic">
+            <p className="text-muted-foreground italic">
               "Build better software by learning from those who code daily."
             </p>
 
             {/* Mission Statement Card */}
-            <div className="mt-8 p-6 rounded-xl border border-slate-700 bg-slate-900/50">
-              <h3 className="text-xl font-bold mb-4 text-blue-400">
+            <div className="mt-8 p-6 rounded-xl border border-border bg-card/50">
+              <h3 className="text-xl font-bold mb-4 text-primary">
                 Our Mission
               </h3>
-              <p className="text-slate-300">
+              <p className="text-card-foreground">
                 To democratize technical knowledge and empower developers at
                 every level to build production-ready applications with
                 confidence, clean code, and modern best practices.

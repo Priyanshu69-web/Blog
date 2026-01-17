@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, Sun, Moon } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/ThemeProvider";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -36,7 +38,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-sm border-b border-slate-800 text-white">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border text-foreground">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
@@ -44,22 +46,31 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="hover:text-blue-400 transition-colors">
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/" className="hover:text-primary transition-colors text-foreground">
             Home
           </Link>
-          <Link href="/posts" className="hover:text-blue-400 transition-colors">
+          <Link href="/posts" className="hover:text-primary transition-colors text-foreground">
             Blogs
           </Link>
 
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg hover:bg-accent transition-colors text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+
           {session?.user?.isAdmin ? (
             <>
-              <Link href="/admin/dashboard" className="hover:text-blue-400 transition-colors">
+              <Link href="/admin/dashboard" className="hover:text-primary transition-colors text-foreground">
                 Dashboard
               </Link>
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 rounded-lg transition-colors text-destructive-foreground"
               >
                 <LogOut className="w-4 h-4" />
                 Logout
@@ -67,7 +78,7 @@ export function Navbar() {
             </>
           ) : (
             <Link href="/login">
-              <Button className="bg-blue-600 hover:bg-blue-700">Login as Admin</Button>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Login as Admin</Button>
             </Link>
           )}
         </div>
@@ -75,7 +86,7 @@ export function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-white hover:text-blue-400 transition-colors"
+          className="md:hidden text-foreground hover:text-primary transition-colors"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -89,13 +100,13 @@ export function Navbar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="md:hidden bg-slate-900 border-t border-slate-800 overflow-hidden"
+            className="md:hidden bg-card border-t border-border overflow-hidden"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
               <motion.div variants={itemVariants}>
                 <Link
                   href="/"
-                  className="block py-2 hover:text-blue-400 transition-colors"
+                  className="block py-2 hover:text-primary transition-colors text-foreground"
                   onClick={() => setIsOpen(false)}
                 >
                   Home
@@ -105,11 +116,23 @@ export function Navbar() {
               <motion.div variants={itemVariants}>
                 <Link
                   href="/posts"
-                  className="block py-2 hover:text-blue-400 transition-colors"
+                  className="block py-2 hover:text-primary transition-colors text-foreground"
                   onClick={() => setIsOpen(false)}
                 >
                   Blogs
                 </Link>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <button
+                  onClick={() => {
+                    toggleTheme();
+                  }}
+                  className="w-full flex items-center gap-2 px-4 py-2 hover:bg-accent rounded-lg transition-colors text-left text-foreground"
+                >
+                  {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </button>
               </motion.div>
 
               {session?.user?.isAdmin ? (
@@ -117,7 +140,7 @@ export function Navbar() {
                   <motion.div variants={itemVariants}>
                     <Link
                       href="/admin/dashboard"
-                      className="block py-2 hover:text-blue-400 transition-colors"
+                      className="block py-2 hover:text-primary transition-colors text-foreground"
                       onClick={() => setIsOpen(false)}
                     >
                       Dashboard
@@ -129,7 +152,7 @@ export function Navbar() {
                         signOut({ callbackUrl: "/" });
                         setIsOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors text-left"
+                      className="w-full flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 rounded-lg transition-colors text-left text-destructive-foreground"
                     >
                       <LogOut className="w-4 h-4" />
                       Logout
@@ -139,7 +162,7 @@ export function Navbar() {
               ) : (
                 <motion.div variants={itemVariants}>
                   <Link href="/login" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                       Login as Admin
                     </Button>
                   </Link>

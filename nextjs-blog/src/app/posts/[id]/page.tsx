@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
@@ -54,21 +55,21 @@ export default async function PostPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-8">
         <Link href="/posts">
-          <Button variant="outline" className="mb-4">
+          <Button variant="outline" className="mb-4 border-border text-foreground hover:bg-accent">
             ← Back to Posts
           </Button>
         </Link>
 
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-4xl font-bold text-white">{post.title}</h1>
+          <h1 className="text-4xl font-bold text-foreground">{post.title}</h1>
           {session?.user?.isAdmin && (
             <div className="flex gap-2">
               <Link href={`/admin/dashboard/edit/${post.id}`}>
-                <Button variant="secondary" className="bg-blue-900 hover:bg-blue-800 text-blue-100">
+                <Button variant="secondary" className="bg-secondary hover:bg-secondary/80 text-secondary-foreground">
                   Edit
                 </Button>
               </Link>
@@ -77,23 +78,21 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className="flex items-center gap-4 mb-6">
-          <span className="text-slate-400">By {post.user.name}</span>
-          <span className="inline-flex items-center rounded-md bg-blue-900/30 px-3 py-1 text-sm font-medium text-blue-300 border border-blue-700">
-            {post.category}
-          </span>
+          <span className="text-muted-foreground">By {post.user.name}</span>
+          <Badge variant="category">{post.category}</Badge>
         </div>
 
-        <div className="prose prose-lg max-w-none prose-invert">
+        <div className="prose prose-lg max-w-none dark:prose-invert">
           <div 
-            className="text-slate-300 leading-relaxed"
+            className="text-foreground leading-relaxed"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
       </div>
 
       {/* Comments Section */}
-      <div className="border-t border-slate-800 pt-8">
-        <h2 className="text-2xl font-bold mb-6 text-white">
+      <div className="border-t border-border pt-8">
+        <h2 className="text-2xl font-bold mb-6 text-foreground">
           Comments ({post.comments.length})
         </h2>
 
@@ -102,30 +101,30 @@ export default async function PostPage({ params }: { params: { id: string } }) {
 
         {/* Comments List */}
         {post.comments.length === 0 ? (
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             No comments yet. Be the first to comment!
           </p>
         ) : (
           <div className="space-y-4">
             {post.comments.map((comment) => (
-              <Card key={comment.id} className="bg-slate-900 border-slate-800">
+              <Card key={comment.id} className="bg-card border-border">
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-card-foreground">
                           {comment.name || comment.email || "Anonymous"}
                         </span>
                         {comment.email && comment.name && (
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-muted-foreground">
                             ({comment.email})
                           </span>
                         )}
-                        <span className="text-sm text-slate-500">
+                        <span className="text-sm text-muted-foreground">
                           {new Date(comment.createdAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-slate-300">{comment.comment}</p>
+                      <p className="text-card-foreground">{comment.comment}</p>
                     </div>
                   </div>
                 </CardContent>

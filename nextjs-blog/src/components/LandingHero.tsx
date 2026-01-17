@@ -4,7 +4,7 @@ import { ArrowRight, Code2 } from "lucide-react";
 
 export function LandingHero() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-b from-background via-muted/20 to-background text-foreground overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -26,40 +26,40 @@ export function LandingHero() {
           </h1>
 
           {/* Subheading */}
-          <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
             Master Web Development, JavaScript, React, Node.js, MongoDB, and System Design. From beginner tutorials to advanced real-world projects—everything you need to grow as a developer.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex gap-4 flex-wrap mb-16">
             <Link href="/posts">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-lg flex items-center gap-2 transition-all hover:gap-3">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg rounded-lg flex items-center gap-2 transition-all hover:gap-3">
                 Explore Blogs
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="px-8 py-6 text-lg border-slate-600 text-white hover:bg-slate-800">
+            <Button size="lg" variant="outline" className="px-8 py-6 text-lg border-border text-foreground hover:bg-accent">
               Start Learning
             </Button>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-slate-700">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-border">
             <div>
-              <div className="text-3xl font-bold text-blue-400">50+</div>
-              <div className="text-sm text-slate-400">Articles</div>
+              <div className="text-3xl font-bold text-primary">50+</div>
+              <div className="text-sm text-muted-foreground">Articles</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-400">10k+</div>
-              <div className="text-sm text-slate-400">Developers</div>
+              <div className="text-3xl font-bold text-primary">10k+</div>
+              <div className="text-sm text-muted-foreground">Developers</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-pink-400">5+</div>
-              <div className="text-sm text-slate-400">Topics</div>
+              <div className="text-3xl font-bold text-primary">5+</div>
+              <div className="text-sm text-muted-foreground">Topics</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-400">100%</div>
-              <div className="text-sm text-slate-400">Free</div>
+              <div className="text-3xl font-bold text-primary">100%</div>
+              <div className="text-sm text-muted-foreground">Free</div>
             </div>
           </div>
         </div>

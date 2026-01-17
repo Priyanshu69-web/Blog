@@ -8,7 +8,7 @@ import { LandingFooter } from "@/components/LandingFooter";
 
 export default function Home() {
   return (
-    <main className="bg-slate-950">
+    <main className="bg-background">
       <LandingHero />
       <FeaturedTopics />
       <WhyMyBlogSpace />

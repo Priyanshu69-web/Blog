@@ -43,40 +43,40 @@ export default async function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Admin Dashboard</h1>
-          <p className="text-slate-400">Manage your blog posts</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Admin Dashboard</h1>
+          <p className="text-muted-foreground">Manage your blog posts</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-slate-200">Total Posts</CardTitle>
+              <CardTitle className="text-card-foreground">Total Posts</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-blue-400">{posts.length}</div>
+              <div className="text-4xl font-bold text-primary">{posts.length}</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-slate-200">Published</CardTitle>
+              <CardTitle className="text-card-foreground">Published</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold text-purple-400">{posts.length}</div>
+              <div className="text-4xl font-bold text-primary">{posts.length}</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-900 border-slate-800">
+          <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-slate-200">Admin Access</CardTitle>
+              <CardTitle className="text-card-foreground">Admin Access</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-sm text-slate-400">Manage all content</div>
+              <div className="text-sm text-muted-foreground">Manage all content</div>
             </CardContent>
           </Card>
         </div>
@@ -84,7 +84,7 @@ export default async function AdminDashboard() {
         {/* Action Buttons */}
         <div className="mb-8">
           <Link href="/admin/dashboard/create">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
               + Create New Post
             </Button>
           </Link>
