@@ -82,12 +82,23 @@ export default async function PostPage({ params }: { params: { id: string } }) {
           <Badge variant="category">{post.category}</Badge>
         </div>
 
-        <div className="prose prose-lg max-w-none dark:prose-invert">
-          <div 
-            className="text-foreground leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </div>
+        <div
+  className="
+    blog-content
+    prose prose-lg max-w-none dark:prose-invert
+    prose-headings:scroll-mt-24
+    prose-headings:font-bold
+    prose-h2:text-2xl prose-h3:text-xl
+    prose-p:leading-8
+    prose-p:my-5
+    prose-li:my-2
+    prose-hr:my-10
+    prose-pre:my-8
+  "
+  dangerouslySetInnerHTML={{ __html: post.content }}
+/>
+
+
       </div>
 
       {/* Comments Section */}
